@@ -2,21 +2,7 @@ import json
 import random
 from collections import defaultdict
 
-USER_NAMES = [
-    'lqrhy3',
-    'Vladmir077',
-    'backspace3',
-    'lero4kaaa3',
-    'vspavl',
-    'pussykitty320'
-]
-
-EXCEPTIONS = [
-    {'Vladmir077', 'pussykitty320'},
-    {'lero4kaaa3', 'vspavl'},
-]
-
-DATA_PATH = '.data.json'
+from constants import DATA_PATH, EXCEPTIONS, USER_NAMES
 
 
 def read_json(path: str) -> dict:
@@ -41,7 +27,6 @@ def shuffle_users():
         ]
         recipient = random.choice(possible_recipients)
         senders.append(sender)
-        print(sender, recipient)
         data[sender]['recipient'] = recipient
         sender = recipient
 
