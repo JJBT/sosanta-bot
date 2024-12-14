@@ -5,14 +5,18 @@ from collections import defaultdict
 USER_NAMES = [
     'lqrhy3',
     'Vladmir077',
-    # 'backspace3'
+    'backspace3',
+    'lero4kaaa3',
+    'vspavl',
+    'pussykitty320'
 ]
 
 EXCEPTIONS = [
-    # {'lqrhy3', 'backspace3'},
+    {'Vladmir077', 'pussykitty320'},
+    {'lero4kaaa3', 'vspavl'},
 ]
 
-DATA_PATH = 'data.json'
+DATA_PATH = '.data.json'
 
 
 def read_json(path: str) -> dict:
@@ -28,11 +32,18 @@ def save_json(data: dict, path: str):
 def shuffle_users():
     data = defaultdict(dict)
     user_names = USER_NAMES.copy()
-    for user_name in USER_NAMES:
-        possible_recipients = [name for name in user_names if name != user_name and {name, user_name} not in EXCEPTIONS]
+    senders = list()
+    sender = USER_NAMES[0]
+    while len(senders) < len(USER_NAMES) - 1:
+        possible_recipients = [
+            name for name in user_names
+            if name != sender and name not in senders and {name, sender} not in EXCEPTIONS
+        ]
         recipient = random.choice(possible_recipients)
-        user_names.remove(recipient)
-        print(user_name, possible_recipients, recipient)
-        data[user_name]['recipient'] = recipient
+        senders.append(sender)
+        print(sender, recipient)
+        data[sender]['recipient'] = recipient
+        sender = recipient
 
+    data[sender]['recipient'] = senders[0]
     save_json(data, DATA_PATH)
